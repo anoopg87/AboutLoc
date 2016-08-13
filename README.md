@@ -1,6 +1,6 @@
 # AboutLoc
 
-  # Used Libraries
+   **Used Libraries**
 
     # compile 'com.android.support:recyclerview-v7:24.0.0'
 
@@ -27,7 +27,6 @@
         Picasso is image loading library for loading the images from the given url
 
 
-  # MVVM Design Pattern is used
+  **MVVM Design Pattern is used**
 
     DataBinding techniques is used to demonstrate the MVVM design pattern
-    
