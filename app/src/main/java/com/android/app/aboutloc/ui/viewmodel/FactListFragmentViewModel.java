@@ -32,7 +32,7 @@ public class FactListFragmentViewModel extends BaseObservable {
 
     //RefreshListener for binding
     @SuppressWarnings("unused")
-    public SwipeRefreshLayout.OnRefreshListener onRefreshListener= () -> {
+    public final SwipeRefreshLayout.OnRefreshListener onRefreshListener= () -> {
         invokeInfoApi();
     };
     public FactListFragmentViewModel(Context context, FactsListFragmentView factsListFragmentView) {
