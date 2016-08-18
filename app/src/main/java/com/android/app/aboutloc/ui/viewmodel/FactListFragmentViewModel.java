@@ -3,6 +3,7 @@ package com.android.app.aboutloc.ui.viewmodel;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -29,15 +30,19 @@ public class FactListFragmentViewModel extends BaseObservable {
     @SuppressWarnings("WeakerAccess")
     public final RecyclerViewConfiguration factListConfig = new RecyclerViewConfiguration();
 
+    //RefreshListener for binding
+    @SuppressWarnings("unused")
+    public SwipeRefreshLayout.OnRefreshListener onRefreshListener= () -> {
+        invokeInfoApi();
+    };
     public FactListFragmentViewModel(Context context, FactsListFragmentView factsListFragmentView) {
         this.context = context;
         this.factsListFragmentView = factsListFragmentView;
         setFactsListAdapter();
-        setUpSwipeRefreshLayout();
         startInitialLoading();
     }
 
-    // setting the recycler view adapter with the null dataset
+    // setting the recycler view adapter with the null dataSet
     private void setFactsListAdapter() {
         factListConfig.setItemAnimator(new DefaultItemAnimator());
         factListConfig.setLayoutManager(new LinearLayoutManager(context));
@@ -46,23 +51,15 @@ public class FactListFragmentViewModel extends BaseObservable {
         factListConfig.setAdapter(factsListAdapter);
     }
 
-
-    private void setUpSwipeRefreshLayout() {
-        //noinspection Convert2MethodRef
-        factsListFragmentView.getSwipeRefreshLayout().setOnRefreshListener(() -> invokeInfoApi());
-    }
-
     private void startInitialLoading() {
     // start the initial loading with swipe refresh layout
         factsListFragmentView.getSwipeRefreshLayout().post(() -> {
             factsListFragmentView.getSwipeRefreshLayout().setRefreshing(true);
             invokeInfoApi();
-
         });
     }
 
     private void invokeInfoApi() {
-
         // invoking the InfoApi by checking the internet connection
         if (ConnectivityReceiver.isConnected()) {
 
